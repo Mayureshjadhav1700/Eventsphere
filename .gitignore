@@ -1,0 +1,30 @@
+# Backend generated files
+backend/eventspere/.gradle/
+backend/eventspere/build/
+backend/eventspere/target/
+backend/eventspere/.idea/
+
+# Frontend generated files
+frontend/node_modules/
+frontend/dist/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+**/application.properties
+
+# IDE and operating system files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local archive
+eventspere.zip

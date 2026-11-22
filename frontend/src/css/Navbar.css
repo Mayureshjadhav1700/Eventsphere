@@ -1,0 +1,160 @@
+
+.navbar {
+  height: 76px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #172554;
+  font-size: 23px;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.navbar-logo svg {
+  color: #f97316;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.navbar-links a,
+.login-link {
+  color: #475569;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active,
+.login-link:hover {
+  color: #f97316;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.register-button {
+  background: #f97316;
+  color: white;
+  text-decoration: none;
+  padding: 12px 21px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.register-button:hover {
+  background: #ea580c;
+}
+
+.mobile-menu {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #172554;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 5%;
+  }
+
+  .navbar-links,
+  .navbar-actions {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+}
+
+
+/* Mobile Navigation */
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+  }
+
+  .mobile-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    color: #172554;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 10px 20px 20px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 12px 20px rgba(15, 23, 42, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-nav a {
+    display: block;
+    padding: 13px 10px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .mobile-nav a.active {
+    color: #f97316;
+  }
+
+  .mobile-nav .mobile-register-button {
+    margin-top: 12px;
+    color: #ffffff;
+    background: #f97316;
+    border-radius: 8px;
+    text-align: center;
+  }
+}

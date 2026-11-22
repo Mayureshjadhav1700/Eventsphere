@@ -1,0 +1,27 @@
+
+main {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+main h1 {
+  color: #172554;
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+main p {
+  color: #64748b;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  main h1 {
+    font-size: 34px;
+  }
+}
