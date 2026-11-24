@@ -1,17 +1,35 @@
+
 spring.application.name=eventspere
 server.port=8080
 
+# MySQL Configuration
 spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/eventsphere_db}
 spring.datasource.username=${DB_USERNAME:root}
 spring.datasource.password=${DB_PASSWORD:CHANGE_ME}
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
+# Hibernate / JPA
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=false
 spring.jpa.properties.hibernate.format_sql=true
 
+# Logging
 logging.level.org.hibernate.SQL=INFO
 logging.level.org.springframework.security=INFO
 
+# JWT Configuration
 jwt.secret=${JWT_SECRET:REPLACE_WITH_A_SECURE_SECRET}
 jwt.expiration=86400000
+
+# Email Configuration
+spring.mail.host=${MAIL_HOST:smtp.gmail.com}
+spring.mail.port=${MAIL_PORT:587}
+spring.mail.username=${MAIL_USERNAME:}
+spring.mail.password=${MAIL_PASSWORD:}
+
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.connectiontimeout=5000
+spring.mail.properties.mail.smtp.timeout=5000
+spring.mail.properties.mail.smtp.writetimeout=5000

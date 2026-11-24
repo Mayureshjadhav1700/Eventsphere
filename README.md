@@ -26,6 +26,8 @@ The platform supports three user roles: **Participant, Organizer, and Admin**.
 - Cancel registrations
 - Track registration status
 - View upcoming and completed events
+- Receive registration confirmation emails
+- Receive registration cancellation emails
 
 ### Organizer
 - Create and manage events
@@ -40,6 +42,13 @@ The platform supports three user roles: **Participant, Organizer, and Admin**.
 - Access the admin dashboard
 - View recent platform events
 
+### Email Notifications
+- Registration confirmation notifications
+- Registration cancellation notifications
+- Gmail SMTP integration using Spring Boot Mail
+- SMTP credentials managed through environment variables
+- Email delivery failures handled without interrupting registration or cancellation workflows
+
 ## Technology Stack
 
 | Layer | Technologies |
@@ -49,6 +58,7 @@ The platform supports three user roles: **Participant, Organizer, and Admin**.
 | Database | MySQL |
 | ORM | Spring Data JPA, Hibernate |
 | Authentication | Spring Security, JWT, BCrypt |
+| Email Service | Spring Boot Mail, Gmail SMTP |
 | API Documentation | Swagger / OpenAPI |
 | Build Tool | Gradle |
 | Version Control | Git, GitHub |
@@ -86,10 +96,11 @@ EventSphere/
 
 Install the following before running the application:
 
-- Java (compatible with the configured Gradle project)
+- Java 26 (as configured in the Gradle project)
 - Node.js and npm
 - MySQL Server
 - Git
+- A Google account if email notifications are required
 
 ## Installation and Setup
 
@@ -112,7 +123,7 @@ CREATE DATABASE eventsphere_db;
 
 Navigate to the backend directory:
 
-```bash
+```powershell
 cd backend/eventspere
 ```
 
@@ -126,7 +137,52 @@ Update `application.properties` with your local MySQL username, password, databa
 
 Never commit your actual credentials or secrets.
 
-Run the backend:
+### 4. Configure Email Notifications
+
+EventSphere uses Spring Boot Mail with Gmail SMTP to send registration confirmation and cancellation emails.
+
+To enable email notifications:
+
+1. Enable 2-Step Verification on your Google account.
+2. Generate an App Password from [Google App Passwords](https://myaccount.google.com/apppasswords).
+3. Configure the following Windows user environment variables:
+
+| Variable | Description |
+|---|---|
+| `MAIL_USERNAME` | Gmail address used for SMTP |
+| `MAIL_PASSWORD` | Gmail App Password (16 characters) |
+| `MAIL_HOST` | SMTP host (default: `smtp.gmail.com`) |
+| `MAIL_PORT` | SMTP port (default: `587`) |
+
+For Windows PowerShell, configure the username:
+
+```powershell
+[Environment]::SetEnvironmentVariable(
+    "MAIL_USERNAME",
+    "your-email@gmail.com",
+    "User"
+)
+```
+
+Configure the App Password:
+
+```powershell
+[Environment]::SetEnvironmentVariable(
+    "MAIL_PASSWORD",
+    "your-16-character-app-password",
+    "User"
+)
+```
+
+Replace the example values with your own credentials. Never share or commit your App Password.
+
+Restart your terminal or IDE after setting the environment variables.
+
+**Note:** Google Workspace accounts may have administrator-controlled restrictions on App Passwords.
+
+### 5. Run the Backend
+
+From the backend directory:
 
 ```powershell
 .\gradlew.bat bootRun
@@ -134,37 +190,37 @@ Run the backend:
 
 The backend runs at:
 
-`http://localhost:8080`
+http://localhost:8080
 
-### 4. Configure the Frontend
+### 6. Configure and Run the Frontend
 
 Open another terminal and navigate to the frontend directory:
 
-```bash
+```powershell
 cd frontend
 ```
 
 Install dependencies:
 
-```bash
+```powershell
 npm install
 ```
 
 Start the development server:
 
-```bash
+```powershell
 npm run dev
 ```
 
 The frontend runs at:
 
-`http://localhost:5173`
+http://localhost:5173
 
 ## API Documentation
 
 Swagger UI is available at:
 
-[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+http://localhost:8080/swagger-ui/index.html
 
 ### Main API Endpoints
 
@@ -189,6 +245,7 @@ Protected endpoints require JWT authentication.
 - Participant registration and event management workflows are implemented.
 - Organizer event management and dashboard functionality are implemented.
 - Admin dashboard currently provides published-event visibility.
+- Registration confirmation and cancellation email notifications are implemented.
 - User management and platform-wide analytics are not implemented.
 - The home page featured events and hero search are currently demonstration elements.
 
@@ -198,7 +255,7 @@ Protected endpoints require JWT authentication.
 - Platform-wide analytics
 - Event image uploads
 - Payment gateway integration
-- Email notifications
+- Event reminders and scheduled notifications
 - Improved event discovery and search
 
 ## Author

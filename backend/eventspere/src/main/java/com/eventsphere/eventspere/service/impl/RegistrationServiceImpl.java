@@ -15,6 +15,7 @@ import com.eventsphere.eventspere.exception.ResourceNotFoundException;
 import com.eventsphere.eventspere.repository.EventRepository;
 import com.eventsphere.eventspere.repository.RegistrationRepository;
 import com.eventsphere.eventspere.repository.UserRepository;
+import com.eventsphere.eventspere.service.EmailService;
 import com.eventsphere.eventspere.service.RegistrationService;
 
 import org.springframework.security.access.AccessDeniedException;
@@ -33,15 +34,18 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationRepository registrationRepository;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
     public RegistrationServiceImpl(
             RegistrationRepository registrationRepository,
             EventRepository eventRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository,
+            EmailService emailService) {
 
         this.registrationRepository = registrationRepository;
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     private User getCurrentParticipant() {
@@ -115,6 +119,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         Registration savedRegistration =
                 registrationRepository.save(registration);
+
+        // Send registration confirmation email
+        emailService.sendRegistrationConfirmation(
+                user,
+                event
+        );
 
         return mapToResponse(savedRegistration);
     }
@@ -201,6 +211,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         registration.setStatus(RegistrationStatus.CANCELLED);
         registrationRepository.save(registration);
+        // Send registration cancellation email
+        emailService.sendRegistrationCancellation(
+                user,
+                registration.getEvent()
+        );
     }
 
     private RegistrationResponse mapToResponse(
